@@ -1,12 +1,2048 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cold War Investigation</title>
-    <link rel="stylesheet" href="styles.css">
+
+  <!-- ============================================================
+       COLD WAR
+       National Archives Dark Theme
+       Organized by Country / Bloc
+  ============================================================ -->
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cold War Archive</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Source+Code+Pro:wght@400;600&family=Oswald:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+
+    /* ============================================================
+       CSS VARIABLES — National Archives Dark Theme
+    ============================================================ */
+    :root {
+      --bg-base:        #0e0e0e;
+      --bg-surface:     #161616;
+      --bg-card:        #1c1c1c;
+      --bg-hover:       #232323;
+      --border:         #2e2e2e;
+      --border-accent:  #444;
+      --gold:           #c9a84c;
+      --gold-dim:       #7a6330;
+      --cream:          #e8e0cc;
+      --cream-dim:      #a89e88;
+      --red:            #9b2335;
+      --red-dim:        #5a1420;
+      --white:          #f5f0e8;
+      --muted:          #666;
+      --font-display:   'Oswald', sans-serif;
+      --font-body:      'EB Garamond', serif;
+      --font-mono:      'Source Code Pro', monospace;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grain texture over the whole page */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    ::selection {
+      background: var(--gold-dim);
+      color: var(--white);
+    }
+
+    ::-webkit-scrollbar       { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+
+    /* ============================================================
+       LOGIN SCREEN
+    ============================================================ */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .login-logo {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .login-seal {
+      width: 72px;
+      height: 72px;
+      border: 2px solid var(--gold-dim);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--gold);
+      font-size: 28px;
+    }
+
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+
+    .login-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      padding: 36px 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-field {
+      margin-bottom: 20px;
+    }
+
+    .login-field label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      margin-bottom: 8px;
+    }
+
+    .login-field input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-field input:focus {
+      border-color: var(--gold);
+    }
+
+    .login-error {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--red);
+      margin-bottom: 14px;
+      min-height: 16px;
+      letter-spacing: 1px;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg-base);
+      border: none;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .login-btn:hover  { background: #d4b060; }
+    .login-btn:active { transform: scale(0.98); }
+
+    .login-footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+
+    /* ============================================================
+       MAIN SITE — hidden until login
+    ============================================================ */
+    #main-site {
+      display: none;
+    }
+
+
+    /* ============================================================
+       TOP NAV BAR
+    ============================================================ */
+    #topbar {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 56px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-badge {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      border: 1px solid var(--gold-dim);
+      padding: 3px 10px;
+    }
+
+    .topbar-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+
+    .topbar-right {
+      position: relative;
+    }
+
+    /* Profile icon button */
+    #profile-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border-accent);
+      background: var(--bg-card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    #profile-btn:hover {
+      border-color: var(--gold);
+    }
+
+    /* Placeholder icon — user can swap with an <img> */
+    #profile-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--cream-dim);
+    }
+
+    /* Dropdown */
+    #profile-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-top: 2px solid var(--gold);
+      min-width: 220px;
+      padding: 16px 20px;
+      z-index: 600;
+    }
+
+    #profile-dropdown.open {
+      display: block;
+    }
+
+    .dropdown-heading {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .developer-name {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--cream);
+      padding: 4px 0;
+      /* ADD NAMES IN THE HTML BELOW */
+    }
+
+
+    /* ============================================================
+       PAGE HEADER
+    ============================================================ */
+    #page-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 48px 40px;
+    }
+
+    .header-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .header-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 600;
+      letter-spacing: 6px;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .header-rule {
+      width: 64px;
+      height: 3px;
+      background: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .header-description {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--cream-dim);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .header-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+
+    /* ============================================================
+       COUNTRY NAVIGATION PILLS
+    ============================================================ */
+    #country-nav {
+      position: sticky;
+      top: 56px;
+      z-index: 400;
+      background: var(--bg-base);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    #country-nav::-webkit-scrollbar { display: none; }
+
+    .country-nav-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .country-nav-btn:hover {
+      color: var(--cream);
+    }
+
+    .country-nav-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+
+    /* ============================================================
+       CONTENT AREA — two-column: event list | event detail
+    ============================================================ */
+    #content-area {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      min-height: calc(100vh - 56px - 49px - 160px);
+    }
+
+
+    /* ---- LEFT PANEL: event list ---- */
+    #event-list {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      position: sticky;
+      top: calc(56px + 49px);
+      height: calc(100vh - 56px - 49px);
+    }
+
+    /* Country section header in list */
+    .list-country-header {
+      padding: 20px 24px 10px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .list-country-header span {
+      display: inline-block;
+      padding-left: 10px;
+      border-left: 2px solid var(--gold);
+    }
+
+    /* Individual event row */
+    .event-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .event-row:hover {
+      background: var(--bg-hover);
+    }
+
+    .event-row.active {
+      background: var(--bg-card);
+      border-left: 3px solid var(--gold);
+      padding-left: 21px;
+    }
+
+    .event-row-number {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      padding-top: 3px;
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .event-row-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .event-row-title {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .event-row.active .event-row-title {
+      color: var(--gold);
+    }
+
+    .event-row-date {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .event-row-tag {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border: 1px solid;
+      margin-top: 3px;
+      align-self: flex-start;
+    }
+
+    .tag-diplomacy  { color: #6b9fd4; border-color: #3d6b9a; }
+    .tag-conflict   { color: #c47a7a; border-color: #7a3a3a; }
+    .tag-espionage  { color: #9b7dc4; border-color: #5e4a7a; }
+    .tag-science    { color: #7ab87a; border-color: #3a6e3a; }
+    .tag-politics   { color: var(--gold); border-color: var(--gold-dim); }
+
+
+    /* ---- RIGHT PANEL: event detail ---- */
+    #event-detail {
+      padding: 48px 56px;
+      overflow-y: auto;
+      height: calc(100vh - 56px - 49px);
+      position: sticky;
+      top: calc(56px + 49px);
+    }
+
+    /* Empty state */
+    .detail-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--muted);
+      gap: 12px;
+      text-align: center;
+    }
+
+    .detail-empty-icon {
+      font-size: 48px;
+      opacity: 0.3;
+    }
+
+    .detail-empty-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Detail content */
+    .detail-content {
+      max-width: 680px;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .detail-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 1px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .detail-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--cream-dim);
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--cream-dim);
+    }
+
+    .detail-body p {
+      margin-bottom: 18px;
+    }
+
+    .detail-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Redacted text easter egg */
+    .redacted {
+      background: var(--bg-card);
+      color: transparent;
+      padding: 1px 6px;
+      cursor: not-allowed;
+      user-select: none;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .redacted:hover {
+      background: var(--red-dim);
+      color: var(--red-dim);
+    }
+
+    .detail-country-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 3px 10px;
+      margin-bottom: 20px;
+    }
+
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-left {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    .footer-gold {
+      color: var(--gold);
+    }
+
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      #content-area {
+        grid-template-columns: 1fr;
+      }
+
+      #event-list {
+        position: static;
+        height: auto;
+        overflow-y: visible;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      #event-detail {
+        position: static;
+        height: auto;
+        padding: 32px 24px;
+      }
+
+      #page-header {
+        padding: 32px 24px;
+      }
+
+      #country-nav {
+        padding: 0 24px;
+      }
+
+      footer {
+        padding: 20px 24px;
+      }
+    }
+
+  </style>
 </head>
 <body>
-    
+
+
+  <!-- ============================================================
+       LOGIN SCREEN
+  ============================================================ -->
+  <div id="login-screen">
+
+    <div class="login-logo">National Cold War Archive</div>
+
+    <div class="login-seal">&#9632;</div>
+
+    <div class="login-title">RESTRICTED ACCESS</div>
+    <div class="login-subtitle">AP World History · Cold War Research</div>
+
+    <div class="login-box">
+
+      <div class="login-field">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          autocomplete="username"
+          value="Mr. Desarno"
+        />
+      </div>
+
+      <div class="login-field">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          value="#1historyteacher"
+        />
+      </div>
+
+      <div class="login-error" id="login-error"></div>
+
+      <button class="login-btn" onclick="handleLogin()">
+        Access Archive
+      </button>
+
+    </div>
+
+    <div class="login-footer">
+      Cold War Research Project &nbsp;·&nbsp; AP World
+    </div>
+
+  </div><!-- /#login-screen -->
+
+
+  <!-- ============================================================
+       MAIN SITE
+  ============================================================ -->
+  <div id="main-site">
+
+    <!-- TOP NAV BAR -->
+    <nav id="topbar">
+
+      <div class="topbar-left">
+        <div class="topbar-badge">Declassified</div>
+        <div class="topbar-title">Cold War Archive</div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Profile button — swap the SVG for an <img src="youricon.png"> if desired -->
+        <button id="profile-btn" onclick="toggleDropdown()" title="Developers">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12
+              2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2
+              0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </button>
+
+        <!-- Developer dropdown -->
+        <div id="profile-dropdown">
+          <div class="dropdown-heading">Historians</div>
+          <!--
+            ADD DEVELOPER NAMES BELOW.
+            Copy this line for each developer:
+            <div class="developer-name">Name Here</div>
+          -->
+          <div class="developer-name">Connor McKay</div>
+          <div class="developer-name">Gongchen Liu</div>
+          <div class="developer-name">Julian Perez</div>
+        </div>
+
+      </div>
+    </nav><!-- /#topbar -->
+
+
+    <!-- PAGE HEADER -->
+    <header id="page-header">
+      <div class="header-eyebrow">In Desarno We Trust</div>
+      <h1 class="header-main-title">COLD WAR</h1>
+      <div class="header-rule"></div>
+      <p class="header-description">
+        An archive containing 29 events and aspects of the Cold War. Organized by nation and relevance. Select any entry to read the
+        full historical record.
+      </p>
+      <div class="header-meta">
+        <div class="header-meta-item">
+          <span class="meta-label">Period</span>
+          <span class="meta-value">1946 – 1991</span>
+        </div>
+        <div class="header-meta-item">
+          <span class="meta-label">Entries</span>
+          <span class="meta-value">29</span>
+        </div>
+        <div class="header-meta-item">
+          <span class="meta-label">Countries / Blocs</span>
+          <span class="meta-value">6</span>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- COUNTRY NAVIGATION -->
+    <div id="country-nav">
+      <button class="country-nav-btn active" onclick="filterCountry('all', this)">All</button>
+      <button class="country-nav-btn" onclick="filterCountry('usa', this)">United States</button>
+      <button class="country-nav-btn" onclick="filterCountry('ussr', this)">Soviet Union</button>
+      <button class="country-nav-btn" onclick="filterCountry('proxy', this)">Proxy Conflicts</button>
+      <button class="country-nav-btn" onclick="filterCountry('europe', this)">Europe</button>
+      <button class="country-nav-btn" onclick="filterCountry('arms', this)">Arms &amp; Treaties</button>
+      <button class="country-nav-btn" onclick="filterCountry('global', this)">Global Arena</button>
+    </div>
+
+
+    <!-- CONTENT: event list + detail panel -->
+    <div id="content-area">
+
+      <!-- LEFT: Scrollable event list -->
+      <div id="event-list">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- RIGHT: Event detail panel -->
+      <div id="event-detail">
+        <div class="detail-empty">
+          <div class="detail-empty-icon">&#9632;</div>
+          <div class="detail-empty-text">Select an entry to read</div>
+        </div>
+      </div>
+
+    </div><!-- /#content-area -->
+
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-left">
+        Cold War Archive &nbsp;
+      </div>
+      <div class="footer-right">
+        <span class="footer-gold">29</span> Entries &nbsp;·&nbsp;
+        1946–1991
+      </div>
+    </footer>
+
+  </div><!-- /#main-site -->
+
+
+  <!-- ============================================================
+       DATA — All 29 events, organized by country / bloc
+  ============================================================ -->
+  <script>
+
+    // ============================================================
+    // EVENT DATA
+    // country values: 'usa' | 'ussr' | 'proxy' | 'europe' | 'arms' | 'global'
+    // tag values: 'diplomacy' | 'conflict' | 'espionage' | 'science' | 'politics'
+    // ============================================================
+    const events = [
+
+      // ── UNITED STATES ─────────────────────────────────────────
+      {
+        id: 1,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 001',
+        title: 'The Iron Curtain Speech',
+        date: 'March 5, 1946',
+        tag: 'politics',
+        body: `
+          <p>Winston Churchill was no longer prime minister — he had been voted
+          out months after victory in Europe. But he was invited to speak in
+          Missouri, with President Truman seated on stage. What he said that
+          afternoon changed the vocabulary of the postwar world.</p>
+
+          <p>The phrase had a geography and a metaphor built in: from the Baltic
+          to the Adriatic, an iron curtain had descended across the continent.
+          Behind it, the ancient capitals of Central and Eastern Europe —
+          Warsaw, Berlin, Prague, Vienna, Budapest — lay in the Soviet sphere.</p>
+
+          <p>Churchill called for an Anglo-American alliance to resist Soviet
+          expansion. He warned that appeasement had failed once and would fail
+          again. The Soviets called the speech a declaration of war. Stalin
+          compared Churchill to Hitler.</p>
+
+          <p>The speech gave the emerging conflict a name and a shape. The Iron
+          Curtain would divide Europe for 43 more years — not just as a
+          metaphor, but as wire, concrete, watchtowers, and minefields stretching
+          across an entire continent.</p>
+        `
+      },
+
+      {
+        id: 2,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 002',
+        title: 'The Containment Policy',
+        date: '1946 – 1947',
+        tag: 'diplomacy',
+        body: `
+          <p>In February 1946, a diplomat in Moscow sat down and wrote the most
+          consequential telegram in American history. George Kennan's "Long
+          Telegram" — 8,000 words — diagnosed the Soviet Union with surgical
+          precision: a regime driven by insecurity, ideologically hostile to the
+          West, but not suicidal. It could be managed.</p>
+
+          <p>Kennan's prescription was containment: not war, not appeasement,
+          but patient, firm resistance at every point where Soviet power pressed
+          outward. Given the alternatives, it was a middle path. It became
+          American strategy almost by default.</p>
+
+          <p>A year later, Kennan published the ideas publicly in Foreign Affairs
+          under the pen name "X." The article caused a sensation. Containment
+          gave the Truman Doctrine its intellectual backbone and would guide
+          American foreign policy for the entire Cold War.</p>
+
+          <p>Kennan later grew horrified at how his ideas were used. He had meant
+          political and economic resistance. What he got was military alliances,
+          covert operations, and wars in Korea and Vietnam. The architect of
+          containment spent the rest of his life arguing it had been misread.</p>
+        `
+      },
+
+      {
+        id: 3,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 003',
+        title: 'The Domino Theory',
+        date: '1954 onward',
+        tag: 'politics',
+        body: `
+          <p>On April 7, 1954, President Eisenhower described America's nightmare
+          scenario with a simple metaphor. "You have a row of dominoes set up,"
+          he said. "You knock over the first one, and what will happen to the
+          last one is the certainty that it will go over very quickly."</p>
+
+          <p>The domino in question was Vietnam. If it fell to communism, Laos
+          and Cambodia would follow. Then Thailand. Then Burma. Then India. The
+          entire edifice of non-communist Asia would collapse in sequence.</p>
+
+          <p>The theory was compelling, intuitive, and largely untested by
+          evidence. It also became the intellectual engine driving American
+          involvement in Southeast Asia for the next two decades. Kennedy cited
+          it. Johnson used it to justify escalation. Nixon invoked it as he
+          extended the war into Cambodia.</p>
+
+          <p>When Vietnam fell in 1975, the dominoes did not all fall as
+          predicted. Thailand did not go communist. Neither did Indonesia or
+          Malaysia. The theory's critics had been right about its limits. But by
+          then, 58,000 Americans and millions of Vietnamese were already dead in
+          its service.</p>
+        `
+      },
+
+      {
+        id: 4,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 004',
+        title: 'The Truman Doctrine',
+        date: 'March 12, 1947',
+        tag: 'diplomacy',
+        body: `
+          <p>Britain told Washington it could no longer afford to support the
+          Greek and Turkish governments against communist pressure. The message
+          was quiet, diplomatic, and seismic. If Britain was retreating from
+          empire, who would hold the line?</p>
+
+          <p>Truman went before Congress and asked for $400 million in aid — and
+          something more. A doctrine: a commitment that the United States would
+          support free peoples resisting subjugation by armed minorities or
+          outside pressures. The language was sweeping enough to justify American
+          intervention almost anywhere in the world. That was intentional.</p>
+
+          <p>Greece and Turkey were the first tests. Greece's communist insurgency
+          collapsed. Turkey modernized and joined NATO. Both remained in the
+          Western camp.</p>
+
+          <p>The Truman Doctrine was more than a policy — it was a declaration
+          that the United States would replace Britain as the guarantor of the
+          liberal international order. It committed America to a global role it
+          had never previously accepted and from which it has never fully
+          withdrawn.</p>
+        `
+      },
+
+      {
+        id: 5,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 005',
+        title: 'The Marshall Plan',
+        date: '1948 – 1952',
+        tag: 'diplomacy',
+        body: `
+          <p>Secretary of State George Marshall gave a commencement address at
+          Harvard in June 1947. In twelve minutes, he proposed rebuilding the
+          shattered economies of Europe with American money. The logic was
+          simple: hungry, desperate people turn to radical politics. Prosperous
+          democracies don't become communist.</p>
+
+          <p>Congress approved $13.3 billion over four years — roughly $150
+          billion in today's money. Sixteen Western European nations received
+          aid. The Soviet Union was invited and declined, correctly understanding
+          that the plan would bind recipients to the American economic orbit.</p>
+
+          <p>The results were remarkable. Western European industrial production
+          surpassed prewar levels by 1952. The communist parties of France and
+          Italy, which had been dangerously strong in 1947, lost ground
+          steadily.</p>
+
+          <p>The Marshall Plan is widely considered the most successful foreign
+          aid program in history. The United States spent money to avoid spending
+          blood. The investment in European recovery paid dividends in stability,
+          trade, and alliance that lasted for generations.</p>
+        `
+      },
+
+      {
+        id: 9,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 009',
+        title: 'Execution of the Rosenbergs',
+        date: 'June 19, 1953',
+        tag: 'espionage',
+        body: `
+          <p>Julius and Ethel Rosenberg died in the electric chair at Sing Sing
+          Prison, the first American civilians executed for espionage in
+          peacetime. Convicted of passing nuclear secrets to the Soviet Union,
+          they maintained their innocence through years of appeals, international
+          outcry, and pleas from Albert Einstein and Pope Pius XII.</p>
+
+          <p>The evidence against Julius was strong. Decoded Soviet communications
+          — the Venona project, kept secret for decades — confirmed he ran a spy
+          ring. His guilt is now accepted by most historians. Ethel's case is far
+          murkier. Her brother David Greenglass later admitted he had lied to
+          protect his own wife. Ethel's primary offense may have been refusing to
+          cooperate.</p>
+
+          <p>The FBI wanted to use Ethel as leverage to break Julius. When he
+          didn't break, she was executed anyway. Their two young sons, Michael
+          and Robert, were left without parents.</p>
+
+          <p>The Rosenberg case was a mirror of its time: the genuine threat of
+          Soviet espionage, Cold War hysteria, and a justice system capable of
+          catastrophic error. The questions it raised about guilt, punishment,
+          and political pressure have never been fully resolved.</p>
+        `
+      },
+
+      {
+        id: 17,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 017',
+        title: 'Bay of Pigs',
+        date: 'April 17–19, 1961',
+        tag: 'espionage',
+        body: `
+          <p>The plan had the outlines of a thriller: a CIA-trained brigade of
+          Cuban exiles would land on Cuba's southern coast, trigger a popular
+          uprising against Fidel Castro, and restore Cuba to the Western orbit.
+          The CIA had executed regime changes before — Iran in 1953, Guatemala
+          in 1954. Cuba would be the same.</p>
+
+          <p>It was not the same. Air strikes failed to destroy Cuba's air force.
+          The landing site was changed at the last minute, eliminating the planned
+          escape route. Kennedy, fearing the appearance of direct American
+          involvement, canceled a second air strike. The 1,400-man brigade landed
+          and was pinned down within 72 hours.</p>
+
+          <p>Kennedy refused to authorize American air cover. The invasion
+          collapsed. 1,189 survivors were captured. Castro held them for 20
+          months before the U.S. ransomed them for $53 million in food and
+          medicine.</p>
+
+          <p>The Bay of Pigs humiliated Kennedy on the world stage, convinced
+          Khrushchev the young president was weak, and cemented Castro's
+          revolutionary legitimacy. It set the conditions, directly, for the
+          Cuban Missile Crisis eighteen months later.</p>
+        `
+      },
+
+      {
+        id: 18,
+        country: 'usa',
+        countryLabel: 'United States',
+        number: 'FILE 018',
+        title: 'Cuban Missile Crisis',
+        date: 'October 16–28, 1962',
+        tag: 'conflict',
+        body: `
+          <p>On October 16, 1962, a U-2 spy plane returned photographs showing
+          Soviet ballistic missile installations under construction in Cuba —
+          90 miles from Florida. President Kennedy had thirteen days to prevent
+          nuclear war.</p>
+
+          <p>His Executive Committee debated every option: air strikes, invasion,
+          blockade, negotiation. The Joint Chiefs wanted to bomb. Kennedy chose
+          a naval quarantine and a direct ultimatum. Soviet ships turned around.
+          But the ones already in Cuba remained.</p>
+
+          <p>Two letters arrived from Khrushchev — one private and conciliatory,
+          one public and defiant. Robert Kennedy suggested a masterstroke: respond
+          to the private letter and ignore the public one. The Soviets agreed to
+          withdraw missiles in exchange for a pledge not to invade Cuba — and,
+          in secret, the removal of American Jupiter missiles from Turkey.</p>
+
+          <p>What the world didn't know until decades later: a Soviet submarine,
+          under depth-charge attack, had come within one officer's decision of
+          launching a nuclear torpedo. That officer — Vasili Arkhipov — refused
+          to authorize the launch. The crisis was resolved not just by the two
+          leaders, but by one man in a submarine who chose caution over protocol.</p>
+        `
+      },
+
+
+      // ── SOVIET UNION ──────────────────────────────────────────
+      {
+        id: 12,
+        country: 'ussr',
+        countryLabel: 'Soviet Union',
+        number: 'FILE 012',
+        title: 'Sputnik and the Space Race',
+        date: 'October 4, 1957',
+        tag: 'science',
+        body: `
+          <p>It weighed 184 pounds and beeped. On October 4, 1957, the Soviet
+          Union placed the world's first artificial satellite in orbit around the
+          Earth. The psychological impact on the United States was seismic and
+          immediate.</p>
+
+          <p>Americans could look up on a clear night and track it — a Soviet
+          machine, passing overhead every 98 minutes. If they could launch a
+          satellite, they could launch a nuclear warhead to any point on the
+          planet. The technological supremacy Americans had taken for granted
+          since Hiroshima was suddenly in question.</p>
+
+          <p>The response was massive. NASA was created in 1958. Federal funding
+          for science and math education surged. Yuri Gagarin became the first
+          human in space in 1961. Kennedy committed to landing a man on the moon
+          before the decade was out.</p>
+
+          <p>On July 20, 1969, Neil Armstrong stepped onto the lunar surface.
+          America had won the most spectacular leg of the space race. But the
+          race itself had done something beyond politics — it produced GPS,
+          weather satellites, and a generation of scientists and engineers on
+          both sides of the Iron Curtain.</p>
+        `
+      },
+
+      {
+        id: 13,
+        country: 'ussr',
+        countryLabel: 'Soviet Union',
+        number: 'FILE 013',
+        title: 'The Arms Race',
+        date: '1949 – 1991',
+        tag: 'science',
+        body: `
+          <p>The Soviet Union detonated its first atomic bomb in August 1949 —
+          four years ahead of American predictions. The shock drove a massive
+          acceleration in American weapons development. Within three years, both
+          sides had hydrogen bombs thousands of times more powerful than the
+          weapon that destroyed Hiroshima.</p>
+
+          <p>The logic of the arms race was its own trap: every American advance
+          prompted a Soviet response; every Soviet advance prompted an American
+          one. By the 1980s, the two superpowers possessed roughly 70,000 nuclear
+          warheads between them — enough to destroy civilization many times
+          over.</p>
+
+          <p>The race consumed enormous resources on both sides. For the Soviet
+          Union, whose economy was far smaller, the strain was existential.
+          Military spending absorbed as much as 25% of Soviet GDP — a burden the
+          state could not sustain indefinitely.</p>
+
+          <p>The arms race also produced constant anxiety about technological
+          surprise. The fear that the other side might achieve a decisive
+          first-strike capability drove investment in missiles, submarines,
+          bombers, radar, satellites, and eventually space-based defense.</p>
+        `
+      },
+
+      {
+        id: 14,
+        country: 'ussr',
+        countryLabel: 'Soviet Union',
+        number: 'FILE 014',
+        title: 'Mutual Assured Destruction',
+        date: '1950s – 1991',
+        tag: 'science',
+        body: `
+          <p>The acronym was MAD, and the strategists who developed it knew
+          exactly what they were doing with the name. Mutual Assured Destruction
+          was the doctrine that stabilized the Cold War: if either superpower
+          launched a nuclear first strike, the other would retain enough surviving
+          weapons to annihilate the attacker. Therefore, neither side would ever
+          launch first.</p>
+
+          <p>The logic depended on a kind of grotesque rationality. Both sides had
+          to believe — and had to believe the other believed — that nuclear war
+          was unsurvivable. Any hint of a survivable first strike, or a defense
+          against retaliation, destabilized the whole equation.</p>
+
+          <p>This is why Reagan's Star Wars proposal terrified the Kremlin: not
+          because it worked, but because if it ever did work, it would break MAD.
+          America could theoretically strike first and then use the shield to
+          absorb whatever was left of the Soviet response.</p>
+
+          <p>MAD worked. But it worked by the thinnest of margins, requiring two
+          adversarial governments to remain rational under extreme pressure — a
+          bet that nearly failed during the Cuban Missile Crisis.</p>
+        `
+      },
+
+      {
+        id: 15,
+        country: 'ussr',
+        countryLabel: 'Soviet Union',
+        number: 'FILE 015',
+        title: 'The U-2 Spy Plane Incident',
+        date: 'May 1, 1960',
+        tag: 'espionage',
+        body: `
+          <p>Francis Gary Powers flew a CIA Lockheed U-2 reconnaissance aircraft
+          70,000 feet above Soviet territory, photographing military installations
+          below. The Soviets had been aware of U-2 overflights for years but
+          lacked the technology to reach them. On May 1, 1960, a surface-to-air
+          missile finally did.</p>
+
+          <p>Powers survived and parachuted to the ground, where he was captured.
+          The Eisenhower administration, not knowing the pilot had survived, issued
+          a cover story: a weather research plane had gone missing near Turkey.
+          Khrushchev waited two days, then produced Powers, the wreckage, and the
+          camera film. The lie collapsed publicly.</p>
+
+          <p>The timing was catastrophic. A four-power summit in Paris was days
+          away — a potential breakthrough in Cold War diplomacy. Khrushchev used
+          the incident to destroy it. He demanded Eisenhower apologize.
+          Eisenhower refused. The summit collapsed before it began.</p>
+
+          <p>Powers was convicted of espionage and sentenced to ten years. He
+          served less than two, exchanged on a Berlin bridge in 1962 for a
+          captured Soviet spy. The U-2 incident ended the brief thaw of the late
+          1950s and reset the Cold War's temperature to frigid.</p>
+        `
+      },
+
+      {
+        id: 25,
+        country: 'ussr',
+        countryLabel: 'Soviet Union',
+        number: 'FILE 025',
+        title: 'Soviet Invasion of Afghanistan',
+        date: 'December 24, 1979',
+        tag: 'conflict',
+        body: `
+          <p>The Politburo debated for months. Afghanistan's communist government
+          was collapsing — torn by internal coups, facing a growing Islamist
+          insurgency, unable to control its own military. Soviet troops crossed
+          the border on Christmas Eve, 1979, expecting a brief stabilization
+          mission. They would stay for nine years, four months, and nine days.</p>
+
+          <p>The CIA began the most expensive covert operation in its history:
+          arming and funding the Afghan mujahideen through Pakistan's intelligence
+          service. Stinger anti-aircraft missiles, supplied beginning in 1986,
+          ended Soviet air superiority and transformed the conflict.</p>
+
+          <p>15,000 Soviet soldiers died. Estimates of Afghan civilian deaths reach
+          into the hundreds of thousands. The war drained Soviet resources,
+          demoralized the military, and accelerated the Soviet Union's terminal
+          economic and political crisis.</p>
+
+          <p>The last Soviet troops withdrew in February 1989. They left behind a
+          devastated country and an army of well-armed fighters with no peacetime
+          purpose. The weapons and chaos the Cold War left behind would return to
+          haunt American foreign policy a decade later.</p>
+        `
+      },
+
+
+      // ── PROXY CONFLICTS ───────────────────────────────────────
+      {
+        id: 8,
+        country: 'proxy',
+        countryLabel: 'Proxy Conflicts',
+        number: 'FILE 008',
+        title: 'The Korean War',
+        date: '1950 – 1953',
+        tag: 'conflict',
+        body: `
+          <p>At dawn on June 25, 1950, North Korean forces crossed the 38th
+          parallel with Soviet-supplied tanks. The UN Security Council —
+          with the Soviet Union boycotting — authorized a military response.
+          Sixteen nations sent troops. America led them under General Douglas
+          MacArthur.</p>
+
+          <p>The war lurched through phases: the near-collapse of South Korea,
+          MacArthur's audacious Inchon landing, the dramatic advance toward the
+          Chinese border, China's stunning intervention with 300,000 troops, and
+          finally a brutal stalemate near where it had all begun. MacArthur
+          wanted to bomb China. Truman fired him for insubordination.</p>
+
+          <p>54,000 Americans died. Estimates of total Korean casualties run into
+          the millions. The peninsula was devastated. When the armistice was
+          signed on July 27, 1953, the border sat almost exactly where it had
+          been before the war began.</p>
+
+          <p>The Korean War established Cold War precedents: limited war short of
+          nuclear conflict, Chinese military power as a factor, and the
+          willingness of the United States to fight — and die — to uphold
+          containment.</p>
+        `
+      },
+
+      {
+        id: 11,
+        country: 'proxy',
+        countryLabel: 'Proxy Conflicts',
+        number: 'FILE 011',
+        title: 'Uprisings in Hungary',
+        date: 'October – November 1956',
+        tag: 'conflict',
+        body: `
+          <p>It began with students. On October 23, 1956, thousands marched in
+          Budapest demanding the withdrawal of Soviet troops, free elections, and
+          an end to Stalinist rule. The secret police fired on the crowd. The
+          protest became a revolution.</p>
+
+          <p>For two weeks, it seemed Hungary might actually break free from the
+          Soviet bloc. A reformist government under Imre Nagy declared Hungary
+          neutral and withdrew from the Warsaw Pact. The country held its breath
+          and waited to see what the West would do.</p>
+
+          <p>The West did nothing. American radio broadcasts had encouraged
+          Hungarian resistance, implying that help would come. It did not.
+          Eisenhower was in the middle of a re-election campaign. The Suez Crisis
+          was consuming British and French attention.</p>
+
+          <p>On November 4, Soviet tanks rolled back into Budapest. The uprising
+          was crushed in days. Nagy was arrested and executed in 1958. Around
+          200,000 Hungarians fled as refugees. The message to the rest of the
+          bloc was unmistakable: the West would not rescue you.</p>
+        `
+      },
+
+      {
+        id: 22,
+        country: 'proxy',
+        countryLabel: 'Proxy Conflicts',
+        number: 'FILE 022',
+        title: 'The Vietnam War',
+        date: '1955 – 1975',
+        tag: 'conflict',
+        body: `
+          <p>America's deepest Cold War wound. What began as military aid to a
+          non-communist South Vietnamese government escalated, under the logic of
+          containment and the Domino Theory, into the largest U.S. military
+          commitment since World War II. At its peak, 543,000 American troops
+          were deployed.</p>
+
+          <p>The Gulf of Tonkin Resolution in 1964 gave LBJ essentially unlimited
+          authority to wage war without a formal declaration. The strategy —
+          search and destroy, body counts, attrition — was designed for a
+          conventional enemy. The Viet Cong fought unconventionally, and they had
+          patience the Pentagon did not account for.</p>
+
+          <p>The Tet Offensive of January 1968 — simultaneous attacks on over 100
+          cities — was a military failure for North Vietnam. It was a political
+          catastrophe for the United States. Walter Cronkite said the war was a
+          stalemate. Johnson decided not to seek re-election.</p>
+
+          <p>American troops withdrew under Nixon. Saigon fell on April 30, 1975.
+          58,000 Americans died. Vietnamese casualties numbered in the millions.
+          The war broke American confidence in military power and created the
+          "Vietnam syndrome" that shaped foreign policy for a generation.</p>
+        `
+      },
+
+      {
+        id: 23,
+        country: 'proxy',
+        countryLabel: 'Proxy Conflicts',
+        number: 'FILE 023',
+        title: 'KGB, CIA, and the Proxy Wars',
+        date: '1947 – 1989',
+        tag: 'espionage',
+        body: `
+          <p>The superpowers rarely fought each other directly. The logic of
+          mutual assured destruction kept their militaries apart. Instead, they
+          fought through proxies — funding, arming, training, and directing
+          opposing sides in conflicts across Africa, Asia, Latin America, and the
+          Middle East.</p>
+
+          <p>The CIA overthrew governments in Iran (1953) and Guatemala (1954),
+          attempted the same in Cuba, and backed anti-communist movements in
+          Angola, El Salvador, Nicaragua, and dozens of other countries. The KGB
+          ran parallel operations — supporting revolutionary movements, funding
+          communist parties, conducting assassinations, and running disinformation
+          campaigns of extraordinary scale.</p>
+
+          <p>The human cost was staggering. Cold War proxy conflicts killed
+          millions. In each case, local populations paid in blood for a global
+          ideological contest they had little power to influence.</p>
+
+          <p>The intelligence agencies were also locked in a permanent war of
+          espionage — running agents inside each other's governments, cracking
+          each other's codes, and occasionally exchanging prisoners on foggy
+          bridges in Berlin.</p>
+        `
+      },
+
+      {
+        id: 27,
+        country: 'proxy',
+        countryLabel: 'Proxy Conflicts',
+        number: 'FILE 027',
+        title: 'Korean Airlines Flight 007',
+        date: 'September 1, 1983',
+        tag: 'conflict',
+        body: `
+          <p>Korean Air Lines Flight 007 departed Anchorage bound for Seoul on
+          the night of August 31, 1983. Due to a navigation error, the Boeing
+          747 drifted off course and flew deep into Soviet airspace over Sakhalin
+          Island. Soviet radar operators tracked it for hours.</p>
+
+          <p>A Soviet Su-15 interceptor fired two air-to-air missiles. All 269
+          people aboard — including 61 Americans and a U.S. congressman — died
+          when the aircraft plunged into the Sea of Japan. The Soviets initially
+          denied involvement, then claimed the plane was on a spy mission.</p>
+
+          <p>Reagan called it a crime against humanity and a massacre. He used
+          the incident to push through the deployment of Pershing II missiles in
+          Western Europe. He also ordered that the Global Positioning System —
+          then under military control — be made available for civilian aviation.
+          GPS is one of Flight 007's unexpected legacies.</p>
+
+          <p>The shootdown came at one of the tensest moments of the Cold War —
+          weeks before a NATO exercise called Able Archer would bring the two
+          superpowers closer to accidental nuclear war than at any point since
+          the Cuban Missile Crisis.</p>
+        `
+      },
+
+
+      // ── EUROPE ────────────────────────────────────────────────
+      {
+        id: 6,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 006',
+        title: 'The Berlin Blockade & Airlift',
+        date: 'June 1948 – May 1949',
+        tag: 'conflict',
+        body: `
+          <p>On June 24, 1948, Soviet forces cut all land, rail, and water routes
+          into West Berlin. Two million civilians in the Western-controlled sectors
+          suddenly depended on a single supply line: the air.</p>
+
+          <p>The Western response became one of the Cold War's defining moments
+          of resolve. The Berlin Airlift flew around the clock for 11 months. At
+          its peak, a plane landed at Tempelhof Airport every 45 seconds. More
+          than 200,000 flights delivered over 2.3 million tons of food, fuel, and
+          supplies.</p>
+
+          <p>A candy bomber named Gail Halvorsen began dropping chocolate and gum
+          attached to handkerchief parachutes to the children below. The gesture
+          became a symbol. The airlift became a public relations triumph as
+          powerful as any military victory.</p>
+
+          <p>Stalin had calculated that the Western powers would abandon Berlin
+          rather than sustain an expensive airlift indefinitely. He miscalculated.
+          On May 12, 1949, the Soviets lifted the blockade. The first major crisis
+          of the Cold War ended as a Western victory — won not with weapons, but
+          with logistics and will.</p>
+        `
+      },
+
+      {
+        id: 7,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 007',
+        title: 'NATO and the Warsaw Pact',
+        date: '1949 & 1955',
+        tag: 'diplomacy',
+        body: `
+          <p>The North Atlantic Treaty was signed on April 4, 1949, by twelve
+          nations. Its core commitment was Article 5: an attack on one member
+          would be considered an attack on all. For the first time in peacetime,
+          the United States bound itself permanently to the defense of Europe.</p>
+
+          <p>The Soviets watched with fury. When West Germany was admitted to NATO
+          in 1955, the response came within days: the Warsaw Pact, signed by the
+          Soviet Union and seven Eastern European satellite states. It gave Moscow
+          legal cover to station troops across Eastern Europe — and to intervene
+          when necessary, as it would in Hungary (1956) and Czechoslovakia
+          (1968).</p>
+
+          <p>The two alliances defined the geography of the Cold War in Europe.
+          NATO's eastern frontier was a tripwire — not strong enough to stop a
+          Soviet invasion, but strong enough to guarantee that any crossing would
+          mean war with America.</p>
+
+          <p>The Warsaw Pact dissolved in 1991. NATO did not. It expanded instead
+          — absorbing former Soviet satellites one by one, in a process that would
+          eventually become one of the central grievances driving Russian foreign
+          policy in the 21st century.</p>
+        `
+      },
+
+      {
+        id: 16,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 016',
+        title: 'The Berlin Wall',
+        date: 'August 13, 1961 – November 9, 1989',
+        tag: 'politics',
+        body: `
+          <p>Between 1945 and 1961, nearly 3.5 million East Germans fled to the
+          West. The hemorrhage was existential: East Germany was losing its
+          doctors, engineers, and teachers at a rate that would hollow out the
+          state within a generation. Something had to stop it.</p>
+
+          <p>On the night of August 12–13, East German soldiers unrolled barbed
+          wire across the city. Concrete blocks followed. Within months, a full
+          barrier — 96 miles long, reinforced with watchtowers, spotlights,
+          tripwires, and a death strip — divided a city that had been one.</p>
+
+          <p>Kennedy called it illegal and immoral and quietly admitted it solved
+          a crisis. He had feared Khrushchev might move on West Berlin entirely.
+          "It's not a very nice solution," he said privately, "but a wall is a
+          hell of a lot better than a war."</p>
+
+          <p>Over 28 years, at least 140 people were killed trying to cross it.
+          Families were separated for decades — sometimes for life. And then, in
+          a single November night in 1989, a bureaucratic blunder and a jubilant
+          crowd with hammers brought it down.</p>
+        `
+      },
+
+      {
+        id: 19,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 019',
+        title: 'Uprisings in Czechoslovakia',
+        date: '1968',
+        tag: 'conflict',
+        body: `
+          <p>Alexander Dubček became First Secretary of the Czechoslovak Communist
+          Party in January 1968 and immediately began dismantling Stalinist
+          repression. Censorship was lifted. Political prisoners were freed.
+          Citizens were allowed to travel. The reforms were called "socialism with
+          a human face," and they were electrifying.</p>
+
+          <p>The Prague Spring lasted seven months. Newspapers published freely.
+          Intellectuals debated. The party opened itself to criticism. Dubček
+          insisted he remained a committed socialist — he simply believed socialism
+          could be humane.</p>
+
+          <p>Moscow watched with mounting alarm as reform threatened to spread to
+          other Eastern bloc states. On the night of August 20–21, half a million
+          Warsaw Pact troops crossed into Czechoslovakia. The Prague Spring was
+          crushed before morning.</p>
+
+          <p>The Brezhnev Doctrine that followed was explicit: the Soviet Union
+          would not permit any socialist country to leave the bloc. Reform was
+          suppressed across Eastern Europe for another two decades. But the
+          memory of Prague 1968 never fully faded — it resurfaced in 1989.</p>
+        `
+      },
+
+      {
+        id: 28,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 028',
+        title: "Poland's Solidarity Movement",
+        date: '1980 – 1989',
+        tag: 'politics',
+        body: `
+          <p>In August 1980, workers at the Lenin Shipyard in Gdańsk, Poland, went
+          on strike over food prices and the firing of a crane operator named Anna
+          Walentynowicz. An electrician named Lech Wałęsa climbed over the fence
+          to join them. What followed was the most consequential labor action in
+          Cold War history.</p>
+
+          <p>Within weeks, Solidarity — Solidarność — had ten million members,
+          making it the largest independent organization in the Soviet bloc. It was
+          not just a trade union. It was a civic movement, a declaration that
+          Polish civil society existed separately from the communist state.</p>
+
+          <p>General Jaruzelski declared martial law in December 1981, imprisoning
+          Wałęsa and thousands of activists. Solidarity went underground. The
+          Catholic Church provided cover. The Reagan administration sent covert
+          support. The movement survived.</p>
+
+          <p>In 1989, a round-table agreement led to partially free elections —
+          the first in the Soviet bloc since the late 1940s. Solidarity won
+          overwhelmingly. Poland got the first non-communist prime minister in
+          Eastern Europe since the Stalin era. The domino began to fall in the
+          other direction.</p>
+        `
+      },
+
+      {
+        id: 29,
+        country: 'europe',
+        countryLabel: 'Europe',
+        number: 'FILE 029',
+        title: 'Fall of the Berlin Wall',
+        date: 'November 9, 1989',
+        tag: 'politics',
+        body: `
+          <p>It began with a bureaucratic blunder. East German Politburo spokesman
+          Günter Schabowski was handed a note at a press conference announcing
+          new travel regulations. Citizens would be permitted to cross into the
+          West. He had not been briefed on the timing. When a reporter asked when
+          the rules would take effect, Schabowski shuffled his papers and said:
+          "Immediately, without delay."</p>
+
+          <p>The press conference was live. Within hours, tens of thousands of
+          East Berliners were gathered at checkpoints, demanding to be let through.
+          The guards had no orders. Their commanders could reach no one in
+          authority willing to make a decision. One checkpoint commander, facing
+          a crowd beyond any possibility of control, ordered the gates opened.</p>
+
+          <p>People poured through. Others climbed onto the Wall. By midnight,
+          crowds had hammers. The most hated structure in Cold War Europe came
+          down not through diplomacy or military action, but through a crowd and
+          a misread note.</p>
+
+          <p>Germany was reunified on October 3, 1990. The Wall had stood for 28
+          years, 2 months, and 27 days. It had killed at least 140 people. Its
+          fall is one of the few moments in modern history that everyone agrees
+          was unambiguously good.</p>
+        `
+      },
+
+
+      // ── ARMS & TREATIES ───────────────────────────────────────
+      {
+        id: 20,
+        country: 'arms',
+        countryLabel: 'Arms & Treaties',
+        number: 'FILE 020',
+        title: 'Nuclear Test Ban Treaty',
+        date: 'August 5, 1963',
+        tag: 'diplomacy',
+        body: `
+          <p>Between 1945 and 1963, the United States and Soviet Union conducted
+          hundreds of nuclear tests — above ground, underground, underwater, and
+          in the upper atmosphere. The fallout was literal: radioactive particles
+          circling the globe, appearing in milk, in rain, in the bodies of children
+          thousands of miles from the test sites.</p>
+
+          <p>Public pressure to stop atmospheric testing grew through the late
+          1950s. The Cuban Missile Crisis, which had just brought the world to the
+          edge of nuclear war, focused both Kennedy and Khrushchev on the need for
+          agreement.</p>
+
+          <p>The Limited Test Ban Treaty, signed in Moscow on August 5, 1963,
+          prohibited nuclear tests in the atmosphere, underwater, and in outer
+          space. Underground tests continued. France and China — both developing
+          their own arsenals — refused to sign.</p>
+
+          <p>It was the first nuclear arms control agreement of the Cold War,
+          achieved eighteen months after the closest nuclear call in human history.
+          It established the principle that the arms race could, in certain ways,
+          be constrained — a principle the subsequent decades would test
+          repeatedly.</p>
+        `
+      },
+
+      {
+        id: 24,
+        country: 'arms',
+        countryLabel: 'Arms & Treaties',
+        number: 'FILE 024',
+        title: 'Nuclear Non-Proliferation Treaty',
+        date: 'Signed 1968, Entered Force 1970',
+        tag: 'diplomacy',
+        body: `
+          <p>By the mid-1960s, the nuclear club was small but growing. The fear
+          was that dozens more would follow — and that in a world of many
+          nuclear-armed states, the probability of nuclear war approached
+          certainty.</p>
+
+          <p>The Nuclear Non-Proliferation Treaty was a grand bargain. Nuclear
+          states agreed not to transfer weapons or technology to others.
+          Non-nuclear states agreed not to develop weapons in exchange for access
+          to peaceful nuclear technology. And all parties agreed — in principle —
+          to work toward eventual disarmament.</p>
+
+          <p>The treaty has 191 state parties. It has not stopped proliferation
+          entirely: India, Pakistan, North Korea, and Israel all developed nuclear
+          weapons outside the framework. But it may have prevented far worse.
+          Without it, predictions from the 1960s suggested 25 or more
+          nuclear-armed states by 1975.</p>
+
+          <p>The third pillar — disarmament — remains the treaty's unfulfilled
+          promise. Nuclear states have reduced their arsenals since the Cold War's
+          peak, but none has disarmed. The NPT continues to carry both its
+          achievements and its contradictions.</p>
+        `
+      },
+
+      {
+        id: 26,
+        country: 'arms',
+        countryLabel: 'Arms & Treaties',
+        number: 'FILE 026',
+        title: 'SALT I, SALT II & START',
+        date: '1972 – 1991',
+        tag: 'diplomacy',
+        body: `
+          <p>The Strategic Arms Limitation Talks were the long, painstaking
+          attempt to put a ceiling on the most dangerous competition in human
+          history. SALT I, signed by Nixon and Brezhnev in Moscow in May 1972,
+          put numerical limits on ballistic missile launchers and banned national
+          missile defense systems. It was modest. It was historic.</p>
+
+          <p>SALT II, signed by Carter and Brezhnev in Vienna in 1979, went
+          further — limiting the total number of nuclear delivery vehicles. The
+          Senate never ratified it. The Soviet invasion of Afghanistan killed any
+          chance. Both sides observed its limits informally anyway, which said
+          something about the shared interest in arms control even when politics
+          made formal agreement impossible.</p>
+
+          <p>The Strategic Arms Reduction Treaty — START — went beyond limitations
+          to actual reductions. Signed by George H.W. Bush and Mikhail Gorbachev
+          in July 1991, it required both sides to cut their strategic nuclear
+          arsenals by roughly 30%. It was the most ambitious nuclear arms
+          reduction agreement ever signed.</p>
+
+          <p>The arms control process established something crucial: that the two
+          nuclear superpowers could negotiate, reach agreement, and trust each
+          other enough to verify compliance. That precedent — imperfect as it
+          was — mattered.</p>
+        `
+      },
+
+      {
+        id: 29,
+        country: 'arms',
+        countryLabel: 'Arms & Treaties',
+        number: 'FILE 029',
+        title: 'Star Wars / SDI',
+        date: 'March 23, 1983',
+        tag: 'science',
+        body: `
+          <p>Reagan went on national television and proposed something that stunned
+          his own advisors as much as it stunned the Soviets: a space-based system
+          of lasers and interceptors that could shoot down Soviet nuclear missiles
+          before they reached American soil. He called it the Strategic Defense
+          Initiative. The press named it Star Wars.</p>
+
+          <p>The scientific community was largely skeptical. Many physicists called
+          it physically impossible with available technology — the computers,
+          sensors, and directed-energy weapons required did not exist and might
+          never exist. Reagan didn't seem to care. He believed in it, and he
+          offered, bafflingly, to share the technology with the Soviets.</p>
+
+          <p>The Kremlin was not reassured. Soviet military planners understood
+          the strategic logic: if SDI worked, it would shatter the doctrine of
+          Mutual Assured Destruction. America could theoretically strike first and
+          then use its shield to absorb whatever remnants of the Soviet arsenal
+          survived.</p>
+
+          <p>SDI was never fully deployed. But its most significant effect may
+          have been its announcement — accelerating the Soviet Union's economic
+          crisis and giving Gorbachev one more reason to seek accommodation with
+          the West.</p>
+        `
+      },
+
+
+      // ── GLOBAL ARENA ──────────────────────────────────────────
+      {
+        id: 21,
+        country: 'global',
+        countryLabel: 'Global Arena',
+        number: 'FILE 021',
+        title: 'Cold War in the Olympics',
+        date: '1972, 1980, 1984',
+        tag: 'politics',
+        body: `
+          <p>The Olympic Games, designed to transcend politics, became one of the
+          Cold War's most visible theaters. When the superpowers couldn't fight
+          with missiles, they competed for gold medals — and the scoreboard
+          carried the weight of ideology.</p>
+
+          <p>The 1972 Munich basketball final is still argued about. The U.S.
+          team, undefeated in Olympic play since 1936, appeared to beat the Soviet
+          Union with one second left. Then officials reset the clock — twice. The
+          Soviets scored at the final horn. American players refused their silver
+          medals. The IOC never ruled definitively on the controversy.</p>
+
+          <p>In 1980, the United States boycotted the Moscow Olympics to protest
+          the Soviet invasion of Afghanistan. 65 other nations joined it. The
+          1980 Miracle on Ice — the U.S. hockey team's stunning defeat of the
+          Soviet juggernaut — had already happened in February, called one of the
+          greatest upsets in sports history.</p>
+
+          <p>The Soviets retaliated in 1984, boycotting the Los Angeles Games. Two
+          generations of athletes never got to compete on the world's biggest stage
+          because their governments were fighting a different kind of war. Sport,
+          like everything else in the Cold War, was never just sport.</p>
+        `
+      },
+
+    ];
+    // ── end event data ────────────────────────────────────────────
+
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let activeFilter  = 'all';
+    let activeEventId = null;
+
+
+    // ============================================================
+    // LOGIN
+    // ============================================================
+    function handleLogin() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const err  = document.getElementById('login-error');
+
+      if (user === 'Mr. Desarno' && pass === '#1historyteacher') {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-site').style.display    = 'block';
+        renderList('all');
+      } else {
+        err.textContent = 'Invalid credentials. Please try again.';
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    }
+
+    // Allow Enter key on login fields
+    document.getElementById('username').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('password').focus();
+    });
+    document.getElementById('password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+
+    // ============================================================
+    // PROFILE DROPDOWN
+    // ============================================================
+    function toggleDropdown() {
+      document.getElementById('profile-dropdown').classList.toggle('open');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const btn  = document.getElementById('profile-btn');
+      const drop = document.getElementById('profile-dropdown');
+      if (!btn.contains(e.target) && !drop.contains(e.target)) {
+        drop.classList.remove('open');
+      }
+    });
+
+
+    // ============================================================
+    // COUNTRY FILTER
+    // ============================================================
+    function filterCountry(country, btn) {
+      activeFilter = country;
+
+      // Update nav button states
+      document.querySelectorAll('.country-nav-btn').forEach(b => {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      // Clear active event
+      activeEventId = null;
+      showEmptyDetail();
+      renderList(country);
+    }
+
+
+    // ============================================================
+    // RENDER EVENT LIST
+    // ============================================================
+    function renderList(filter) {
+      const list = document.getElementById('event-list');
+      list.innerHTML = '';
+
+      // Group filtered events by countryLabel
+      const filtered = filter === 'all'
+        ? events
+        : events.filter(e => e.country === filter);
+
+      // Build ordered groups
+      const groups = {};
+      filtered.forEach(ev => {
+        if (!groups[ev.countryLabel]) groups[ev.countryLabel] = [];
+        groups[ev.countryLabel].push(ev);
+      });
+
+      // Render each group
+      Object.keys(groups).forEach(label => {
+        // Section header
+        const header = document.createElement('div');
+        header.className = 'list-country-header';
+        header.innerHTML = `<span>${label}</span>`;
+        list.appendChild(header);
+
+        // Event rows
+        groups[label].forEach(ev => {
+          const row = document.createElement('div');
+          row.className = 'event-row';
+          row.dataset.id = ev.id;
+          if (ev.id === activeEventId) row.classList.add('active');
+
+          row.innerHTML = `
+            <div class="event-row-number">${ev.number.replace('FILE ', '')}</div>
+            <div class="event-row-info">
+              <div class="event-row-title">${ev.title}</div>
+              <div class="event-row-date">${ev.date}</div>
+            </div>
+            <div class="event-row-tag tag-${ev.tag}">${ev.tag}</div>
+          `;
+
+          row.addEventListener('click', () => selectEvent(ev.id));
+          list.appendChild(row);
+        });
+      });
+    }
+
+
+    // ============================================================
+    // SELECT EVENT → SHOW DETAIL
+    // ============================================================
+    function selectEvent(id) {
+      activeEventId = id;
+
+      // Highlight active row
+      document.querySelectorAll('.event-row').forEach(row => {
+        row.classList.toggle('active', parseInt(row.dataset.id) === id);
+      });
+
+      const ev = events.find(e => e.id === id);
+      if (!ev) return;
+
+      const detail = document.getElementById('event-detail');
+      detail.innerHTML = `
+        <div class="detail-content">
+          <div class="detail-eyebrow">${ev.number} &nbsp;·&nbsp; ${ev.countryLabel}</div>
+          <h2 class="detail-title">${ev.title}</h2>
+          <div class="detail-date">${ev.date}</div>
+          <div class="detail-body">${ev.body}</div>
+        </div>
+      `;
+    }
+
+    function showEmptyDetail() {
+      document.getElementById('event-detail').innerHTML = `
+        <div class="detail-empty">
+          <div class="detail-empty-icon">&#9632;</div>
+          <div class="detail-empty-text">Select an entry to read</div>
+        </div>
+      `;
+    }
+
+  </script>
+
 </body>
 </html>
