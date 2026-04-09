@@ -1,1 +1,1 @@
-a cold war website for an ap world project
+a cold war website for a school project
